@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/box/viewer.js.png?branch=master)](https://travis-ci.org/box/viewer.js)
+[![Selenium Test Status](https://saucelabs.com/browser-matrix/viewerjs.svg)](https://saucelabs.com/u/viewerjs)
 
 # Viewer.js
 

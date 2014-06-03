@@ -4,6 +4,7 @@
 var WRAPPER_HEADER = 'var Crocodoc = (function ($) {\n\n',
     WRAPPER_FOOTER = '\n\nreturn Crocodoc;\n})(jQuery);';
 
+
 module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-qunit');
     grunt.loadNpmTasks('grunt-contrib-jshint');
@@ -16,6 +17,9 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-image-embed');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-parallel');
+    grunt.loadNpmTasks('grunt-saucelabs');
+    grunt.loadNpmTasks('grunt-git-rev-parse');
+    grunt.loadNpmTasks('grunt-saucelabs-browsers');
 
     var rewriteRulesSnippet = require('grunt-connect-rewrite/lib/utils').rewriteRequest;
 
@@ -62,6 +66,14 @@ module.exports = function (grunt) {
 
                         return middlewares;
                     }
+                }
+            },
+            sauce: {
+                options: {
+                    keepalive: false,
+                    open: false,
+                    port: 9999,
+                    base: ''
                 }
             }
         },
@@ -171,6 +183,45 @@ module.exports = function (grunt) {
                     'realtime-example'
                 ]
             }
+        },
+        'git-rev-parse': {
+            build: {
+                options: {
+                    prop: 'git-revision'
+                }
+            }
+        },
+        'saucelabs-browsers': {
+            all: {
+                options: {
+                    filter: function (browsers) {
+                        return require('./filter-saucelabs-browsers')(browsers).all;
+                    }
+                }
+            }
+        },
+        'saucelabs-qunit': {
+            all: {
+                options: {
+                    username: 'viewerjs',
+                    testname: 'qunit',
+                    urls: [
+                        'http://localhost:9999/test/index.html?noglobals=true',
+                        'http://localhost:9999/test/plugins/index.html?noglobals=true'
+                    ],
+                    build: process.env.TRAVIS_JOB_ID || 'local:<%= grunt.config("git-revision") %>',
+                    browsers: '<%= saucelabs.browsers %>',
+                    concurrency: 3,
+                    tunnelTimeout: 5,
+                    throttled: 3,
+                    'max-duration': 120,
+                    sauceConfig: {
+                        'record-video': false,
+                        'video-upload-on-pass': false,
+                        'idle-timeout': 60
+                    }
+                }
+            }
         }
     });
 
@@ -194,4 +245,5 @@ module.exports = function (grunt) {
     grunt.registerTask('build', ['default', 'cssmin', 'uglify']);
     grunt.registerTask('serve', ['default', 'configureRewriteRules', 'parallel:examples']);
     grunt.registerTask('release', ['build', 'copy']);
+    grunt.registerTask('sauce', ['test', 'git-rev-parse', 'connect:sauce', 'saucelabs-browsers:all', 'saucelabs-qunit']);
 };
