@@ -25,6 +25,7 @@ Crocodoc.addUtility('url', function (framework) {
          * Make the given path absolute
          *  - if path doesn't contain protocol and domain, prepend the current protocol and domain
          *  - if the path is relative (eg. doesn't begin with /), also fill in the current path
+         * @NOTE: does not work properly in IE7
          * @param   {string} path The path to make absolute
          * @returns {string}      The absolute path
          */
@@ -40,12 +41,14 @@ Crocodoc.addUtility('url', function (framework) {
         isCrossDomain: function (url) {
             var parsedURL = this.parse(url);
 
-            return parsedURL.protocol !== window.location.protocol ||
-                   parsedURL.host !== window.location.host;
+            return parsedURL.protocol && parsedURL.host &&
+                (parsedURL.protocol !== window.location.protocol ||
+                parsedURL.host !== window.location.host);
         },
 
         /**
          * Parse a URL into protocol, host, port, etc
+         * @NOTE: does not work properly in IE7
          * @param   {string} url The URL to parse
          * @returns {object}     The parsed URL parts
          */
@@ -64,8 +67,7 @@ Crocodoc.addUtility('url', function (framework) {
                 // an absolute URL, which can then be fed back in to get the
                 // expected result. WTF? Yep!
                 if (browser.ie && url !== parsed.href) {
-                    url = parsed.href;
-                    parsed.href = url;
+                    return this.parse(parsed.href);
                 }
             }
 
