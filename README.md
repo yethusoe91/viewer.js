@@ -45,18 +45,17 @@ npm install viewer
 bower install viewer
 ```
 
+#### v0.5.0
 
 **Development**
 
-[crocodoc.viewer.js v0.5.0](https://raw.githubusercontent.com/box/viewer.js/v0.5.0/dist/crocodoc.viewer.js) 209.2 kB (29.4 kB gzipped)
-
-[crocodoc.viewer.css v0.5.0](https://raw.githubusercontent.com/box/viewer.js/v0.5.0/dist/crocodoc.viewer.css) 12.8 kB (2.8 kB gzipped)
+* [crocodoc.viewer.js](https://raw.githubusercontent.com/box/viewer.js/v0.5.0/dist/crocodoc.viewer.js) 209.2 kB (29.4 kB gzipped)
+* [crocodoc.viewer.css](https://raw.githubusercontent.com/box/viewer.js/v0.5.0/dist/crocodoc.viewer.css) 12.8 kB (2.8 kB gzipped)
 
 **Production**
 
-[crocodoc.viewer.min.js v0.5.0](https://raw.githubusercontent.com/box/viewer.js/v0.5.0/dist/crocodoc.viewer.min.js) 48.3 kB (9.8 kB gzipped)
-
-[crocodoc.viewer.min.css v0.5.0](https://raw.githubusercontent.com/box/viewer.js/v0.5.0/dist/crocodoc.viewer.min.css) 10.1 kB (2.2 kB gzipped)
+* [crocodoc.viewer.min.js](https://raw.githubusercontent.com/box/viewer.js/v0.5.0/dist/crocodoc.viewer.min.js) 48.3 kB (9.8 kB gzipped)
+* [crocodoc.viewer.min.css](https://raw.githubusercontent.com/box/viewer.js/v0.5.0/dist/crocodoc.viewer.min.css) 10.1 kB (2.2 kB gzipped)
 
 
 ### Loading a Simple Viewer
